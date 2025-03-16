@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   root 'boards#index'
-  resources :boards
+
+  resources :boards do
+    resources :lists, only: [:create, :update, :destroy] do
+      patch :sort, on: :collection  # Endpoint for sorting lists
+      resources :tasks, only: [:create, :update, :destroy] do
+        patch :sort, on: :collection  # Endpoint for sorting tasks
+      end
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
