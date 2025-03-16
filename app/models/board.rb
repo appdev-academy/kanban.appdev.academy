@@ -14,5 +14,5 @@ class Board < ApplicationRecord
 
   scope :ordered, -> { order(:name) }
 
-  has_many :lists, dependent: :destroy
+  has_many :lists, -> { order(:position) }, dependent: :destroy
 end
