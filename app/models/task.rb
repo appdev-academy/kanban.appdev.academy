@@ -1,23 +1,22 @@
 # == Schema Information
 #
-# Table name: lists
+# Table name: tasks
 #
 #  id         :integer          not null, primary key
 #  name       :string           not null
 #  position   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  board_id   :integer          not null
+#  list_id    :integer          not null
 #
 # Indexes
 #
-#  index_lists_on_board_id  (board_id)
+#  index_tasks_on_list_id  (list_id)
 #
 # Foreign Keys
 #
-#  board_id  (board_id => boards.id)
+#  list_id  (list_id => lists.id)
 #
-class List < ApplicationRecord
-  has_many :tasks, dependent: :destroy
-  belongs_to :board
+class Task < ApplicationRecord
+  belongs_to :list
 end
