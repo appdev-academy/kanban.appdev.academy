@@ -1,31 +1,32 @@
 class BoardsController < ApplicationController
   before_action :set_board, only: %i[ show edit update destroy ]
 
-  # GET /boards or /boards.json
+  # @route GET / (root)
+  # @route GET /boards (boards)
   def index
     @boards = Board.ordered
   end
 
-  # GET /boards/1 or /boards/1.json
+  # @route GET /boards/:id (board)
   def show
   end
 
-  # GET /boards/new
+  # @route GET /boards/new (new_board)
   def new
     @board = Board.new
   end
 
-  # GET /boards/1/edit
+  # @route GET /boards/:id/edit (edit_board)
   def edit
   end
 
-  # POST /boards or /boards.json
+  # @route POST /boards (boards)
   def create
     @board = Board.new(board_params)
 
     respond_to do |format|
       if @board.save
-        format.html { redirect_to @board, notice: "Board was successfully created." }
+        format.html { redirect_to @board, notice: 'Board was successfully created.' }
         format.json { render :show, status: :created, location: @board }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -34,11 +35,12 @@ class BoardsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /boards/1 or /boards/1.json
+  # @route PATCH /boards/:id (board)
+  # @route PUT /boards/:id (board)
   def update
     respond_to do |format|
       if @board.update(board_params)
-        format.html { redirect_to @board, notice: "Board was successfully updated." }
+        format.html { redirect_to @board, notice: 'Board was successfully updated.' }
         format.json { render :show, status: :ok, location: @board }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -47,12 +49,12 @@ class BoardsController < ApplicationController
     end
   end
 
-  # DELETE /boards/1 or /boards/1.json
+  # @route DELETE /boards/:id (board)
   def destroy
     @board.destroy!
 
     respond_to do |format|
-      format.html { redirect_to boards_path, status: :see_other, notice: "Board was successfully destroyed." }
+      format.html { redirect_to boards_path, status: :see_other, notice: 'Board was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -65,6 +67,6 @@ class BoardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def board_params
-      params.expect(board: [ :name ])
+      params.expect(board: [:name])
     end
 end
