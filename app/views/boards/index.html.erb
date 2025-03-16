@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Boards" %>
+
+<h1>Boards</h1>
+
+<%= turbo_stream_from "boards" %>
+
+<div id="boards">
+  <%= render "boards/list", boards: @boards %>
+</div>
+
+<%= link_to "New board", new_board_path %>
