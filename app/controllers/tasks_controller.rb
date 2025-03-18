@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  include UpsertPositions
+
   before_action :set_list, only: :create
   before_action :set_task, only: [:update, :destroy]
 
@@ -34,47 +36,29 @@ class TasksController < ApplicationController
   end
 
   def update_tasks_positions(current_task, new_position, new_list_id)
-    new_position = new_position.presence ? new_position.to_i : nil
-    new_list_id = new_list_id.presence ? new_list_id.to_i : nil
     return unless new_position
 
     source_list = current_task.list
     destination_list = new_list_id ? List.find(new_list_id) : current_task.list
     same_list = source_list.id == destination_list.id
+
+    # Can safely update List for Tasks if it has changed
     current_task.update_columns(list_id: destination_list.id) unless same_list
 
+    # Change positions of Tasks in destination List
     ordered_tasks_ids = destination_list.tasks.order(:position).pluck(:id)
-
-    # Reposition current List
     ordered_tasks_ids.delete(current_task.id)
-    ordered_tasks_ids.insert(new_position, current_task.id)
+    ordered_tasks_ids.insert(new_position.to_i, current_task.id)
     ordered_tasks_ids.compact!
 
     new_positions = ordered_tasks_ids.each_with_index.to_h
-
-    sql = <<-SQL
-      UPDATE tasks
-      SET position = CASE id
-        #{new_positions.map { |id, position| "WHEN #{id} THEN #{position}" }.join("\n")}
-      END
-      WHERE id IN (#{new_positions.keys.join(",")})
-    SQL
-
-    ActiveRecord::Base.connection.execute(sql)
+    upsert_positions(Task, new_positions)
 
     return if same_list
 
+    # Change positions of Tasks in original List
     ordered_tasks_ids = source_list.tasks.order(:position).pluck(:id)
     new_positions = ordered_tasks_ids.each_with_index.to_h
-
-    sql = <<-SQL
-      UPDATE tasks
-      SET position = CASE id
-        #{new_positions.map { |id, position| "WHEN #{id} THEN #{position}" }.join("\n")}
-      END
-      WHERE id IN (#{new_positions.keys.join(",")})
-    SQL
-
-    ActiveRecord::Base.connection.execute(sql)
+    upsert_positions(Task, new_positions)
   end
 end
