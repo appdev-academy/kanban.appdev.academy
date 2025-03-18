@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'PUT /lists/:id', type: :request do
   let(:board) { create(:board) }
-  let!(:list) { create(:list, board:, position: 0) }
 
   let(:params) { { list: list_params } }
   subject(:request) { put "/lists/#{list.id}", params: }
 
   context 'WITHOUT :position' do
+    let!(:list) { create(:list, board:, position: 0) }
     let(:list_params) { { name: 'New List Name' } }
 
     it 'is expected to update List' do
@@ -32,10 +32,11 @@ RSpec.describe 'PUT /lists/:id', type: :request do
     context 'when moving to FIRST position' do
       let(:position) { 0 }
 
-      it 'is expected to update List and reposition other Lists' do
+      it 'is expected to update current List and reposition all Lists in the Board' do
         expect(list.reload.name).not_to eq('New List Name')
 
         request
+
         expect(response).to have_http_status(:ok)
         expect(list.reload.name).to eq('New List Name')
         expect(list3.reload.position).to eq(0)
@@ -49,10 +50,11 @@ RSpec.describe 'PUT /lists/:id', type: :request do
     context 'when moving to LAST position' do
       let(:position) { 4 }
 
-      it 'is expected to update List and reposition other Lists' do
+      it 'is expected to update current List and reposition all Lists in the Board' do
         expect(list.reload.name).not_to eq('New List Name')
 
         request
+
         expect(response).to have_http_status(:ok)
         expect(list.reload.name).to eq('New List Name')
         expect(list1.reload.position).to eq(0)
@@ -67,10 +69,11 @@ RSpec.describe 'PUT /lists/:id', type: :request do
       let(:list) { list2 }
       let(:position) { 3 }
 
-      it 'is expected to update List and reposition other Lists' do
+      it 'is expected to update current List and reposition all Lists in the Board' do
         expect(list.reload.name).not_to eq('New List Name')
 
         request
+
         expect(response).to have_http_status(:ok)
         expect(list.reload.name).to eq('New List Name')
         expect(list1.reload.position).to eq(0)
