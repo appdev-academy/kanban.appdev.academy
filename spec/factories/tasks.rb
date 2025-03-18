@@ -2,7 +2,7 @@
 #
 # Table name: tasks
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  name       :string           not null
 #  position   :integer          not null
 #  created_at :datetime         not null
@@ -15,7 +15,7 @@
 #
 # Foreign Keys
 #
-#  list_id  (list_id => lists.id)
+#  fk_rails_...  (list_id => lists.id)
 #
 FactoryBot.define do
   factory :task do

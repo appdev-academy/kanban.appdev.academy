@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
   root 'boards#index'
 
-  resources :boards do
+  resources :boards, shallow: true do
     resources :lists, only: [:create, :update, :destroy] do
-      patch :sort, on: :collection  # Endpoint for sorting lists
-      resources :tasks, only: [:create, :update, :destroy] do
-        patch :sort, on: :collection  # Endpoint for sorting tasks
-      end
+      resources :tasks, only: [:create, :update, :destroy]
     end
   end
 

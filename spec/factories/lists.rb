@@ -2,7 +2,7 @@
 #
 # Table name: lists
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  name       :string           not null
 #  position   :integer          not null
 #  created_at :datetime         not null
@@ -15,7 +15,7 @@
 #
 # Foreign Keys
 #
-#  board_id  (board_id => boards.id)
+#  fk_rails_...  (board_id => boards.id)
 #
 FactoryBot.define do
   factory :list do
