@@ -51,6 +51,8 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem 'rubocop-rails-omakase', require: false
+
+  gem 'rspec-rails', '~> 7.0.0'
 end
 
 group :development do
@@ -62,4 +64,15 @@ group :development do
 
   # Routes annotations in controllers
   gem 'chusaku', require: false
+end
+
+group :test do
+  # RSpec one-liners for ActiveRecord
+  gem 'shoulda-matchers', '~> 6.0'
+
+  # Factories for ActiveRecord
+  gem 'factory_bot_rails'
+
+  # Data generator for RSpec
+  gem 'faker'
 end

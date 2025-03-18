@@ -7,3 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+board_number = (Board.maximum(:id) || 0) + 1
+board = Board.create!(name: "Board ##{board_number}")
+
+5.times do |list_index|
+  list = board.lists.create!(name: "List ##{list_index+1}", position: list_index)
+
+  8.times do |task_index|
+    list.tasks.create!(name: "Task ##{list_index+1}.#{task_index+1}", position: task_index)
+  end
+end
