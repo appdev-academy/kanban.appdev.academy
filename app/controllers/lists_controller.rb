@@ -14,6 +14,9 @@ class ListsController < ApplicationController
     @list.update!(list_params.except(:position))
     update_lists_positions(@list, list_params[:position])
 
+    board = @list.board
+    Turbo::StreamsChannel.broadcast_update_to board.lists_channel, target: board.lists_channel, partial: 'lists/lists', locals: { lists: board.lists }
+
     head :ok
   end
 

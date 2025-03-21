@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+.list {
+  width: 300px;
+  min-height: 200px;
+  background: #f8f9fa;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.task {
+  background: #fff;
+  padding: 8px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  cursor: grab;
+}
+
+.sortable-ghost {
+  opacity: 0.5;
+}

@@ -2,12 +2,8 @@
 
 <h2>Boards#show</h2>
 
-<div id="lists">
-  <ul data-controller="sortable" style="display: flex;">
-    <% @board.lists.each do |list| %>
-      <li data-list-id="<%= list.id %>" style="width: 400px; border:solid">
-        <%= render list %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<%= turbo_stream_from @board.lists_channel %>
+
+<ul id="<%= @board.lists_channel %>" data-controller="sortable" style="display: flex;">
+  <%= render partial: 'lists/lists', locals: { lists: @board.lists} %>
+</ul>
