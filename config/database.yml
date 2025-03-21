@@ -4,8 +4,21 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: kanban_development
+  primary:
+    <<: *default
+    database: kanban_development
+  cache:
+    <<: *default
+    database: kanban_development_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: kanban_development_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: kanban_development_cable
+    migrations_paths: db/cable_migrate
 
 test:
   <<: *default

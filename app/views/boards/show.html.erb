@@ -1,10 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @board %>
+<h2>Boards#show</h2>
 
-<div>
-  <%= link_to "Edit this board", edit_board_path(@board) %> |
-  <%= link_to "Back to boards", boards_path %>
-
-  <%= button_to "Destroy this board", @board, method: :delete %>
+<div id="lists">
+  <ul data-controller="sortable" style="display: flex;">
+    <% @board.lists.each do |list| %>
+      <li data-list-id="<%= list.id %>" style="width: 400px; border:solid">
+        <%= render list %>
+      </li>
+    <% end %>
+  </ul>
 </div>

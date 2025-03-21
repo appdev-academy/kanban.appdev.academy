@@ -1,0 +1,11 @@
+<div id="<%= dom_id list %>">
+  #<%= list.id %> <b><%= list.name %></b> at position <%= list.position %>
+</div>
+
+<ul data-controller="sortable" data-sortable-group-value="tasks" data-list-id="<%= list.id %>">
+  <% list.tasks.each do |task| %>
+    <li data-task-id="<%= task.id %>">
+      <%= render task %>
+    </li>
+  <% end %>
+</ul>
