@@ -1,5 +1,5 @@
 <% lists.each do |list| %>
-  <li data-list-id="<%= list.id %>" style="width: 400px; border:solid">
+  <li data-list-id="<%= list.id %>" class="flex-none p-2 bg-gray-600 w-xs rounded-sm">
     <%= render list %>
   </li>
 <% end %>

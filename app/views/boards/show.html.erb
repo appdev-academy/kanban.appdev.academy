@@ -1,9 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
-<h2>Boards#show</h2>
+<h2 class="text-white">Boards#show</h2>
 
 <%= turbo_stream_from @board.lists_channel %>
 
-<ul id="<%= @board.lists_channel %>" data-controller="sortable" style="display: flex;">
+<ul id="<%= @board.lists_channel %>" data-controller="sortable" class="flex flex-nowrap overflow-x-auto gap-4" >
   <%= render partial: 'lists/lists', locals: { lists: @board.lists} %>
 </ul>
