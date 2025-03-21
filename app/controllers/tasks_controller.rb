@@ -14,6 +14,9 @@ class TasksController < ApplicationController
     @task.update!(task_params.except(:position, :list_id))
     update_tasks_positions(@task, task_params[:position], task_params[:list_id])
 
+    board = @task.list.board
+    Turbo::StreamsChannel.broadcast_update_to board.lists_channel, target: board.lists_channel, partial: 'lists/lists', locals: { lists: board.lists }
+
     head :ok
   end
 

@@ -20,8 +20,4 @@
 class List < ApplicationRecord
   has_many :tasks, -> { order(:position) }, dependent: :destroy
   belongs_to :board
-
-  def broadcast_updates
-    Turbo::StreamsChannel.broadcast_update_to board.lists_channel, target: board.lists_channel, partial: 'lists/lists', locals: { lists: @board.lists }
-  end
 end
