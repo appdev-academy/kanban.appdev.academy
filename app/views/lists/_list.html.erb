@@ -15,7 +15,7 @@
 
 <%= link_to "New Task", new_list_task_path(list), data: { turbo_frame: 'modal' }, class: "font-medium text-blue-600 hover:underline" %>
 
-<ul data-controller="sortable" data-sortable-group-value="tasks" data-list-id="<%= list.id %>" class="min-h-64 flex flex-nowrap flex-col overflow-y-auto gap-2">
+<ul data-controller="sortable" data-sortable-group-value="tasks" data-list-id="<%= list.id %>" class="min-h-48 flex flex-nowrap flex-col overflow-y-auto gap-2">
   <% list.tasks.each do |task| %>
     <li data-task-id="<%= task.id %>">
       <%= render task %>
