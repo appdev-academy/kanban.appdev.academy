@@ -26,7 +26,7 @@ class BoardsController < ApplicationController
 
     respond_to do |format|
       if @board.save
-        format.html { redirect_to @board, notice: 'Board was successfully created.' }
+        format.html { redirect_to @board }
         format.json { render :show, status: :created, location: @board }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class BoardsController < ApplicationController
   def update
     respond_to do |format|
       if @board.update(board_params)
-        format.html { redirect_to @board, notice: 'Board was successfully updated.' }
+        format.html { redirect_to @board }
         format.json { render :show, status: :ok, location: @board }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +54,7 @@ class BoardsController < ApplicationController
     @board.destroy!
 
     respond_to do |format|
-      format.html { redirect_to boards_path, status: :see_other, notice: 'Board was successfully destroyed.' }
+      format.html { redirect_to boards_path, status: :see_other }
       format.json { head :no_content }
     end
   end

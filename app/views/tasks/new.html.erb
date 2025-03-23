@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "modal" do %>
+  <dialog aria-labelledby="modalTitle" data-controller="modal" data-action="click->modal#clickOutside" class="mx-auto mt-16 p-4 w-sm rounded-md backdrop:backdrop-blur-xs">
+    <header class="flex items-center justify-between">
+      <h3 id="modalTitle" class="text-xl font-bold">
+        New Task
+      </h3>
+      <%= button_tag data: { action: "modal#hide" }, class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      <% end %>
+    </header>
+    <div class="h-0 py-4">
+      <hr class="h-px bg-gray-200 border-0">
+    </div>
+    <%= render "form", task: @task, model: [@task.list, @task] %>
+  </dialog>
+<% end %>

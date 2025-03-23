@@ -1,10 +1,12 @@
-<div id="<%= dom_id list %>" class="text-white">
+<div id="<%= dom_id list %>">
   #<%= list.id %> <b><%= list.name %></b> at position <%= list.position %>
 </div>
 
+<%= link_to "New Task", new_list_task_path(list), data: { turbo_frame: 'modal' } %>
+
 <ul data-controller="sortable" data-sortable-group-value="tasks" data-list-id="<%= list.id %>" class="min-h-80 max-h-160 flex flex-nowrap flex-col overflow-y-auto gap-2">
   <% list.tasks.each do |task| %>
-    <li data-task-id="<%= task.id %>" class="">
+    <li data-task-id="<%= task.id %>">
       <%= render task %>
     </li>
   <% end %>

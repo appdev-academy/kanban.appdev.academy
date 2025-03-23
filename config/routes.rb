@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :boards, shallow: true do
     resources :lists, only: [:create, :update, :destroy] do
-      resources :tasks, only: [:create, :update, :destroy]
+      resources :tasks, only: [:new, :edit, :create, :update, :destroy]
     end
   end
 

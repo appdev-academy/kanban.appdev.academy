@@ -1,27 +1,58 @@
 class TasksController < ApplicationController
   include UpsertPositions
 
-  before_action :set_list, only: :create
-  before_action :set_task, only: [:update, :destroy]
+  before_action :set_list, only: [:new, :create]
+  before_action :set_task, only: [:edit, :update, :destroy]
+
+  # @route GET /lists/:list_id/tasks/new (new_list_task)
+  def new
+    @task = @list.tasks.build
+  end
+
+  # @route GET /tasks/:id/edit (edit_task)
+  def edit
+  end
 
   # @route POST /lists/:list_id/tasks (list_tasks)
   def create
+    @task = @list.tasks.build(task_params.except(:position, :list_id))
+    @task.position = 0
+
+    if @task.save
+      update_tasks_positions(@task, 0)
+      broadcast_updates_to_board
+
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.update('modal', '') }
+        format.html { head :ok }
+      end
+    else
+      render :new
+    end
   end
 
   # @route PATCH /tasks/:id (task)
   # @route PUT /tasks/:id (task)
   def update
-    @task.update!(task_params.except(:position, :list_id))
-    update_tasks_positions(@task, task_params[:position], task_params[:list_id])
+    if @task.update!(task_params.except(:position, :list_id))
+      update_tasks_positions(@task, task_params[:position], task_params[:list_id])
+      broadcast_updates_to_board
 
-    board = @task.list.board
-    Turbo::StreamsChannel.broadcast_update_to board.lists_channel, target: board.lists_channel, partial: 'lists/lists', locals: { lists: board.lists }
-
-    head :ok
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.update('modal', '') }
+        format.html { head :ok }
+      end
+    else
+      render :edit
+    end
   end
 
   # @route DELETE /tasks/:id (task)
   def destroy
+    @task.destroy!
+    broadcast_updates_to_board
+
+    head :ok
   end
 
   private
@@ -38,7 +69,12 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :position, :list_id)
   end
 
-  def update_tasks_positions(current_task, new_position, new_list_id)
+  def broadcast_updates_to_board
+    board = @task.list.board
+    Turbo::StreamsChannel.broadcast_update_to board.lists_channel, target: board.lists_channel, partial: 'lists/lists', locals: { lists: board.lists }
+  end
+
+  def update_tasks_positions(current_task, new_position, new_list_id = nil)
     return unless new_position
 
     source_list = current_task.list
