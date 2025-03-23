@@ -1,3 +1,9 @@
+<% if @task.persisted? %>
+  <% model = @task %>
+<% else %>
+  <% model = [@task.list, @task]%>
+<% end %>
+
 <%= form_with(model:, class: "max-w-md mx-auto") do |form| %>
   <% if task.errors.any? %>
     <div style="color: red">

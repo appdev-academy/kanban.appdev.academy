@@ -42,7 +42,11 @@ gem 'thruster', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Render SVG icons inline
 gem 'inline_svg'
+
+# Stateless reusable components
+gem 'view_component'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
