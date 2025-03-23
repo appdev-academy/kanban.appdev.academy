@@ -1,16 +1,16 @@
-<% if task.persisted? %>
-  <% model = task %>
+<% if list.persisted? %>
+  <% model = list %>
 <% else %>
-  <% model = [task.list, task]%>
+  <% model = [list.board, list]%>
 <% end %>
 
 <%= form_with(model:, class: "max-w-md mx-auto") do |form| %>
-  <% if task.errors.any? %>
+  <% if list.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <h2><%= pluralize(list.errors.count, "error") %> prohibited this list from being saved:</h2>
 
       <ul>
-        <% task.errors.each do |error| %>
+        <% list.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -23,8 +23,8 @@
   </div>
 
   <div class="mb-4">
-    <%= form.label :list, class: "block mb-2 text-sm font-medium text-gray-900" %>
-    <%= form.text_field :list, value: task.list.name, disabled: true, class: "bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed" %>
+    <%= form.label :board, class: "block mb-2 text-sm font-medium text-gray-900" %>
+    <%= form.text_field :board, value: list.board.name, disabled: true, class: "bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed" %>
   </div>
 
   <div>

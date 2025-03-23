@@ -71,7 +71,7 @@ class TasksController < ApplicationController
 
   def broadcast_updates_to_board
     board = @task.list.board
-    Turbo::StreamsChannel.broadcast_update_to board.lists_channel, target: board.lists_channel, partial: 'lists/lists', locals: { lists: board.lists }
+    Turbo::StreamsChannel.broadcast_update_to board.lists_channel, target: board.lists_channel, partial: 'lists/lists', locals: { board: board }
   end
 
   def update_tasks_positions(current_task, new_position, new_list_id = nil)

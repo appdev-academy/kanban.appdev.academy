@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'boards#index'
 
   resources :boards, shallow: true do
-    resources :lists, only: [:create, :update, :destroy] do
+    resources :lists, only: [:new, :edit, :create, :update, :destroy] do
       resources :tasks, only: [:new, :edit, :create, :update, :destroy]
     end
   end

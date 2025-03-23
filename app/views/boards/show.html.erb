@@ -3,5 +3,5 @@
 <%= turbo_stream_from @board.lists_channel %>
 
 <ul id="<%= @board.lists_channel %>" data-controller="sortable" class="flex flex-nowrap overflow-x-auto gap-2" >
-  <%= render partial: 'lists/lists', locals: { lists: @board.lists} %>
+  <%= render partial: 'lists/lists', locals: { board: @board } %>
 </ul>

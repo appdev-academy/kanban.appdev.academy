@@ -2,7 +2,7 @@
   <dialog aria-labelledby="modalTitle" data-controller="modal" data-action="click->modal#clickOutside" class="mx-auto mt-16 p-4 w-sm rounded-md backdrop:backdrop-blur-xs">
     <header class="flex items-center justify-between">
       <h3 id="modalTitle" class="text-xl font-bold">
-        New Task
+        <%= @title %>
       </h3>
       <%= button_tag data: { action: "modal#hide" }, class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" do %>
         <%= inline_svg_tag "icons/x.svg" %>

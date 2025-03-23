@@ -1,10 +1,21 @@
-<div id="<%= dom_id list %>">
-  #<%= list.id %> <b><%= list.name %></b> at position <%= list.position %>
+<div id="<%= dom_id list %>" class="flex cursor-grab">
+  <div class="flex-1">
+    <p class="font-semibold"><%= list.name %></p>
+    <p>ID (<%= list.id %>) at position <%= list.position %></p>
+  </div>
+  <div>
+    <%= link_to edit_list_path(list), data: { turbo_frame: 'modal' }, class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-6 h-6 ms-auto inline-flex justify-center items-center" do %>
+      <%= inline_svg_tag "icons/pencil.svg" %>
+    <% end %>
+    <%= button_to list_path(list), method: :delete, class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-6 h-6 ms-auto inline-flex justify-center items-center" do %>
+      <%= inline_svg_tag "icons/trash.svg" %>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New Task", new_list_task_path(list), data: { turbo_frame: 'modal' } %>
+<%= link_to "New Task", new_list_task_path(list), data: { turbo_frame: 'modal' }, class: "font-medium text-blue-600 hover:underline" %>
 
-<ul data-controller="sortable" data-sortable-group-value="tasks" data-list-id="<%= list.id %>" class="min-h-80 max-h-160 flex flex-nowrap flex-col overflow-y-auto gap-2">
+<ul data-controller="sortable" data-sortable-group-value="tasks" data-list-id="<%= list.id %>" class="min-h-64 flex flex-nowrap flex-col overflow-y-auto gap-2">
   <% list.tasks.each do |task| %>
     <li data-task-id="<%= task.id %>">
       <%= render task %>
