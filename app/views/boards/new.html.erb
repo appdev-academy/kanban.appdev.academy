@@ -1,11 +1,4 @@
-<% content_for :title, "New board" %>
-
-<h1>New board</h1>
-
-<%= render "form", board: @board %>
-
-<br>
-
-<div>
-  <%= link_to "Back to boards", boards_path %>
+<div class="w-md mx-auto">
+  <h1 class="text-2xl font-bold mb-4">New Board</h1>
+  <%= render "form", board: @board %>
 </div>

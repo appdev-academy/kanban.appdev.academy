@@ -1,3 +1,23 @@
-<div id="<%= dom_id board %>">
-  <h3><%= board.name %></h3>
-</div>
+<li id="<%= dom_id board %>" class="pb-3 sm:pb-4">
+  <div class="flex items-center space-x-4 rtl:space-x-reverse">
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-medium text-gray-900 truncate">
+        <%= board.name %>
+      </p>
+      <p class="text-xs text-gray-500 truncate">
+        contains <%= pluralize(board.lists.count, 'List') %> and <%= pluralize(board.tasks.count, 'Task') %>
+      </p>
+    </div>
+    <div class="inline-flex items-center text-base font-semibold text-gray-900">
+      <%= link_to board_path(board), class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-6 h-6 ms-auto inline-flex justify-center items-center" do %>
+        <%= inline_svg_tag "icons/eye.svg" %>
+      <% end %>
+      <%= link_to edit_board_path(board), class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-6 h-6 ms-auto inline-flex justify-center items-center" do %>
+        <%= inline_svg_tag "icons/pencil.svg" %>
+      <% end %>
+      <%= button_to board_path(board), method: :delete, class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-6 h-6 ms-auto inline-flex justify-center items-center" do %>
+        <%= inline_svg_tag "icons/trash.svg" %>
+      <% end %>
+    </div>
+  </div>
+</li>

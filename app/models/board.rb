@@ -15,6 +15,7 @@ class Board < ApplicationRecord
   scope :ordered, -> { order(:name) }
 
   has_many :lists, -> { order(:position) }, dependent: :destroy
+  has_many :tasks, through: :lists
 
   def lists_channel
     "boards_#{id}_lists"
