@@ -72,7 +72,7 @@ end
 
 group :test do
   # RSpec one-liners for ActiveRecord
-  gem 'shoulda-matchers', '~> 6.0'
+  gem 'shoulda-matchers', '~> 6.5'
 
   # Factories for ActiveRecord
   gem 'factory_bot_rails'
